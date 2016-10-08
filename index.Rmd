@@ -1,0 +1,21 @@
+---
+title: "2016 Formula 1 Grand Prix - Venues"
+author: "Kelvin Chan"
+date: "October 8, 2016"
+output: html_document
+---
+
+## Introduction
+
+This submission for Developing Data Products : Week 2 overlays the dates and location of venues for the 2016 Formula 1 Grand Prix. The csv file used to include marker information can be sourced from this [website](https://github.com/khychan/DevelopingDataProducts.Week2).  
+
+## R Code and Results
+
+```{r, fig.width=10, fig.height=6}
+suppressWarnings(library(leaflet))
+markerTable <- read.csv("F1.data.csv", stringsAsFactors=FALSE) # Sources the file 'F1.data.csv'
+mapView <- leaflet(markerTable) %>% 
+        addTiles('http://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', 
+	attribution='Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)') # Creates the map
+mapView %>% addMarkers(~lng,~lat,popup=markerTable$markers) # Sets marker points
+```
